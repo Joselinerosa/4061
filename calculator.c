@@ -1,4 +1,4 @@
-#include "calculator.h"More actions
+#include "calculator.h"
 
 /* Function prototypes */
 /* Feel free to add your own helper functions */
