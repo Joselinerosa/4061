@@ -38,8 +38,7 @@ void process_file(const char *file_path, int pipe_fd){
         perror("ERROR opening the file");
         exit(1);
     }
-    int i;
-    int sum;
+
     while(fscanf(file, "%d", &num)==1){ //reads and writes it back to sum
         count++;
         sum+=num;
