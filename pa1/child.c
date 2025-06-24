@@ -30,11 +30,24 @@ int main(int argc, char *argv[]) {
 void process_file(const char *file_path, int pipe_fd){
     int count;
     long sum;
+    int num;
     /* TODO: Task 3 - Open file and extract numbers */
-        
     /* Read integers from file, one per line */
+    FILE *file =fopen(file_path, "r");
+    if (file==NULL){
+        perror("ERROR opening the file");
+        exit(1);
+    }
+    int i;
+    int sum;
+    while(fscanf(file, "%d", &num)==1){ //reads and writes it back to sum
+        count++;
+        sum+=num;
+    }  
     
     /* Remember to close the file */
+
+    fclose(file);
     
     /* Phase 1: Write results to .results file */
     write_results_to_file(file_path, count, sum);

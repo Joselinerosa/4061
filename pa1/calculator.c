@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 
     DIR *dir = opendir(dir_path);
     if (dir==NULL){
-        printf("ERROR %s directory does not exist /n");
+        printf("ERROR %s directory does not exist \n");
         return -1;
     }
     closedir(dir);
