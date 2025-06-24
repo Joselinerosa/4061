@@ -58,10 +58,18 @@ void process_file(const char *file_path, int pipe_fd){
 
 void write_results_to_file(const char *original_path, int count, long sum) {
     /* TODO: Create .results filename */
-        
+char results_path[1024]; //buffer
+    
     /* TODO: Write count and sum to results file */
+    FILE *results= fopen("results.txt", "w");
+        if (results == NULL){
+            perror("Error- results);
+            exit(1);
+        }
+    fprintf(results_file, "%d\n%ld\n", count, sum);
     
     /* Remember to close files and release resources */
+    fclose(results)
 }
 
 void send_results_via_pipe(int pipe_fd, int count, long sum){
