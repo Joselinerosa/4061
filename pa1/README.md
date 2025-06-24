@@ -1,8 +1,8 @@
 # Programming Assignment 1: Integer Sum and Average Calculation
 
 ## Team Information
-1. Team members: [TODO: Add team member names]
-2. x500: [TODO: Add x500 IDs]
+1. Team members: Joseline Rosa & Peyton Tregembo
+2. x500: Rosa0168 & Trege006
 3. Division of tasks: [TODO: Describe task division]
 4. Lab machine used: [TODO: Specify lab machine]
 
