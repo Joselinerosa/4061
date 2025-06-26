@@ -13,7 +13,6 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    //const char *dir_path;
     const char *dir_path = argv[1];
     /* TODO: Get the path to the directory from command line options */ 
 
@@ -42,7 +41,7 @@ void process_directory(const char *dir_path) {
         return ;
     }
 
-    printf("Files in directory '%s':\n", dir_path);
+    //printf("Files in directory '%s':\n", dir_path);
 
 //Peytons code
 //First count files so we can create pid array
@@ -63,27 +62,23 @@ void process_directory(const char *dir_path) {
     while((entry = readdir(dir)) != NULL) {
         if((strcmp(entry->d_name, ".") == 0) || (strcmp(entry->d_name, "..") == 0))
             continue;
-
-    
 //Peyton's Code
-// Build full file path
-    char filepath[1024];
-    snprintf(filepath, sizeof(filepath), "%s/%s", dir_path, entry->d_name);
+        char filepath[1024];
+        snprintf(filepath, sizeof(filepath), "%s/%s", dir_path, entry->d_name);
 
-    pid_t pid = fork();
-    if (pid < 0) {
-        perror("fork");
-        exit(1);
-    } else if (pid == 0) {
+        pid_t pid = fork();
+        if (pid < 0) {
+            perror("fork");
+            exit(1);
+        } else if (pid == 0) {
             // Child process exec's child program
-        execl("./child", "child", filepath, NULL);
-        perror("execl");  // exec only returns on error
-        exit(1);
-    } else {
+            execl("./child", "child", filepath, NULL);
+            perror("execl");  // exec only returns on error
+            exit(1);
+        } else {
             // Parent saves child pid
-        pids[file_index++] = pid;
-    }
-    
+            pids[file_index++] = pid;
+        }
     }
     closedir(dir);
 
@@ -91,11 +86,10 @@ void process_directory(const char *dir_path) {
     for (int i = 0; i < file_index; i++) {
         int status;
         waitpid(pids[i], &status, 0);
-    
-}
+    }
 
 /* Count files first to allocate memory */
-int num_files = count_files_in_directory(dir_path);
+//int num_files = count_files_in_directory(dir_path);
 
 /* TODO: Allocate memory for results */
 
@@ -114,22 +108,22 @@ int num_files = count_files_in_directory(dir_path);
 }
 
 int count_files_in_directory(const char *dir_path) {
-int count = 0;
+    int count = 0;
 //Peyton's code
-struct dirent *entry;
-DIR *dir = opendir(dir_path);
-if (dir == NULL) {
-    perror("opendir");
-    return 0;
-}
+    struct dirent *entry;
+    DIR *dir = opendir(dir_path);
+    if (dir == NULL) {
+        perror("opendir");
+        return 0;
+    }
 
-while ((entry = readdir(dir)) != NULL) {
-    if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
-        continue;
-    count++;
-}
+    while ((entry = readdir(dir)) != NULL) {
+        if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+            continue;
+        count++;
+    }
 
-closedir(dir);
-return count;
+    closedir(dir);
+    return count;
 }
 
