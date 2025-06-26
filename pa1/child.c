@@ -15,8 +15,7 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
    
-    const char *file_path;
-    file_path = argv[1]; 
+    const char *file_path = argv[1];
     int pipe_fd = -1;
     /* TODO: Get path to the file */ 
 
