@@ -32,6 +32,7 @@ Used system calls reviewed in lectures to maintain compatibility with CSE lab Li
 
 ## AI Tools Usage
 Peyton: I used AI to help fix my spacing for calculator.c
+
 Joseline: I used AI to help with my syntax in child.c specifically task 3
 
 
