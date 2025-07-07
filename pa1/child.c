@@ -6,6 +6,15 @@ void process_file(const char *file_path, int pipe_fd);
 void write_results_to_file(const char *original_path, int count, long sum);
 void send_results_via_pipe(int pipe_fd, int count, long sum);
 
+//for task 4
+typedef struct {
+    int count;
+    long sum;
+    char filename[256];
+}PipeMessage;
+
+const char *file_path= NULL;
+
 int main(int argc, char *argv[]) {
     /* TODO: Task 3 - Receive file path from command line */
     /* Phase 1: Only file path is needed */
@@ -15,7 +24,8 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
    
-    const char *file_path = argv[1];
+    //const char *file_path = argv[1];
+    file_path= argv[1]; //change to global
     int pipe_fd = -1;
     /* TODO: Get path to the file */ 
 
@@ -98,4 +108,26 @@ void send_results_via_pipe(int pipe_fd, int count, long sum){
     /* This function will be implemented in Phase 2 */
     /* TODO: Write message to pipe */
     /* Hint: The pipe file descriptor should be passed somehow */
+
+    PipeMessage msg; //need to create a MESSAGE to send through the pipe
+
+    //store the number of integers and the total sum 
+    msg.count = count; 
+    msg.sum = sum;
+
+    const char *filename = strrchr(file_path, '/'); //get file name from the file path, just want the file name NOT the whole path
+    
+    if (filename !=NULL){
+        filename= filename +1; // If '/' was found, move one characterr forward to skip it 
+    }else {
+        filename = file_path; //if '/' was NOT found, the path is already just the file name
+}
+strncpy(msg.filename, filename, sizeof(msg.filename)); //COPY the file name into the message struct
+msg.filename[sizeof(msg.filename) -1]='\0'; //need to make sure the string is properly NULL-TERMINATED
+
+if (write(pipe_fd, &msg, sizeof(PipeMessage))==-1){ //WRITE the messgae into the pipe 
+    perror("write"); //print error if writing FAILS 
+    exit(1);
+}
+close(pipe_fd); //close the pipe file descriptor after sending 
 }
