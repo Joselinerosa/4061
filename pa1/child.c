@@ -20,6 +20,16 @@ int main(int argc, char *argv[]) {
     /* TODO: Get path to the file */ 
 
     /* TODO: Get the file descriptor from the command line in Phase 2 */
+    if (argc==3){
+        pipe_fd = atoi(argv[2]);
+        if (pipe_fd < 0) {
+            fprintf(stderr, "Invalid pipe file descriptor: %d\n", pipe_fd);
+            exit(1);
+        }
+    } else {
+        /* In Phase 1, we don't use the pipe */
+        pipe_fd = -1; // No pipe in Phase 1
+    }
 
     /* Process the file */
     process_file(file_path, pipe_fd);
@@ -49,7 +59,15 @@ void process_file(const char *file_path, int pipe_fd){
     fclose(file);
     
     /* Phase 1: Write results to .results file */
-    write_results_to_file(file_path, count, sum);
+    if (pipe_fd==-1) {
+        /* In Phase 1, we only write to the results file */
+        write_results_to_file(file_path, count, sum);
+    } else{
+        /* In Phase 2, we write to the results file and send via pipe */
+        send_results_via_pipe(pipe_fd, count, sum);
+    }
+    
+    
     
     /* Phase 2: Send results via pipe */
     /* TODO: Task 4 - Implement pipe communication */
