@@ -29,6 +29,7 @@ Used system calls reviewed in lectures to maintain compatibility with CSE lab Li
 ## Challenges Faced
 1.) Figuring out how to use GitHub 
 2.) Debugging .results file outputs to make sure formatting was correct
+3.) Figuring out the correct syntax for some of the functions
 
 ## AI Tools Usage
 Peyton: I used AI to help fix my spacing for calculator.c
